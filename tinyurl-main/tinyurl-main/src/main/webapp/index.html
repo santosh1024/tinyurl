@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<head>
+<!-- SRI Hash Generator: www.srihash.org -->
+<STYLE type="text/css">
+/* http://www.cssportal.com/css-properties/ */
+html {
+	font-size: 80%;
+}
+
+html,body {
+	padding-left: 3px;
+	font-family: Verdana;
+	background-color: white;
+	color: black;
+}
+
+input {
+	vertical-align: bottom;
+	color: black;
+	border: 1px solid grey;
+}
+
+input[type="text"],input[type="password"],input[type="submit"] {
+	margin-top: 2px;
+	width: 365px;
+}
+
+.format {
+	font-weight: bold;
+	background-color: yellow;
+}
+
+.title {
+	font-size: 42px;
+	font-family: Terminal;
+	font-weight: bold;
+	color: rgb(0, 127, 0);
+}
+.form {
+	float: left;
+}
+.qr {
+	float: left;
+	color: black;
+	border: 1px solid #007F00;
+	margin-left: 30px;
+	width: 150px;
+	height: 150px;
+}
+a:link    { color: #007F00; }  /* unvisited  */
+a:visited { color: #007F00; }  /* visited    */
+a:hover   { color: #FF00FF; }  /* mouse over */
+a:active  { color: #0000FF; }  /* selected   */ 
+
+</STYLE>
+</head>
+<body>
+	<DIV CLASS="title">TinyURL::PUT</DIV>
+
+	<DIV CLASS="form">
+	<FORM NAME="TinyURL" METHOD="POST"
+		ENCTYPE="application/x-www-form-urlencoded"
+		onSubmit="t.request(); return false;">
+		<p>
+			Long URL:<br />
+			<INPUT TYPE="TEXT" id="url" VALUE="">
+		<p>
+			Short URL: <SPAN CLASS="link">&nbsp;</SPAN><br />
+			<INPUT TYPE="TEXT" id="response" VALUE="">
+		<p>
+			<br />
+			<INPUT TYPE="SUBMIT" VALUE="Put">
+	</FORM>
+	</DIV>
+	<DIV CLASS="qr">&nbsp;</DIV>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="//code.jquery.com/jquery-3.5.0.min.js" integrity="sha384-LVoNJ6yst/aLxKvxwp6s2GAabqPczfWh6xzm38S/YtjUyZ+3aTKOnD/OJVGYLZDl" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	var postTiny = "tiny";
+	var redirTiny = "r";
+	var qrTiny = "q";
+	var baseURL = window.location.origin + "/";
+	var t = {
+		request : function() {
+			$.ajax(postTiny, {
+				type: 'POST',
+				data: {
+					url: $('#url').val()
+				}
+			}).done(function(response) {
+				t.update(response.id);
+			}).fail(function(jqXHR, textStatus, errorThrown) {
+				$('#response').val('Failed: ' + textStatus + " " + jqXHR.status + ": " + jqXHR.responseText);
+				console.log('failed: ' + textStatus + " " + jqXHR.status + ": " + jqXHR.responseText);
+			});
+		},
+		update : function(id) {
+			var shorted = baseURL + redirTiny + "/" + id;
+			var qrImg = baseURL + qrTiny + "/" + id + "?size=150";
+			//var qrImg = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chld=H|1&chl=" + shorted; // deprecated
+			$('#response').val(shorted);
+			$('.link').html('<a href="' + shorted + '">Link</a>');
+			$('.qr').html('<img src="' + qrImg + '">');
+		}
+	};
+</script>
+</body>
+</html>
