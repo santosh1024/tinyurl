@@ -70,6 +70,8 @@ TinyURL is a Simple URL Shortener build on Java. Project is Open source (Apache 
 
 ## Running (Tomcat)
 
+* This application uses the older `javax.servlet` API and is compatible with Tomcat 9 (or older) only.
+* Tomcat 10 and Tomcat 11 use the `jakarta.servlet` namespace and will fail to start this WAR with `NoClassDefFoundError: javax/servlet/http/HttpServlet`.
 * Set `CATALINA_OPTS="-Dorg.javastack.tinyurl.config=file://${CATALINA_BASE}/conf/org.javastack.tinyurl.properties"` in tomcat/bin/setenv.sh (linux)
 * Copy war file inside webapps directory with name: `ROOT.war`
 * To use short links without the WAR context path, deploy as `ROOT.war` or configure a proxy from `/r/*` to the app's `/r/*` paths.

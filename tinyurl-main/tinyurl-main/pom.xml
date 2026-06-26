@@ -66,7 +66,7 @@
 			<artifactId>reload4j</artifactId>
 			<version>1.2.25</version>
 		</dependency>
-		<!-- Servlets -->
+		<!-- Servlets (javax.servlet, compatible with Tomcat 9 / older only) -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
